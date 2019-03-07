@@ -18,21 +18,6 @@
   </div>
 
   <script>
-
-    // $(document).ready(function () {
-    //   var $body = $('.tweets-container');
-    //   $body.html('');
-
-    //   var index = streams.home.length - 1;
-    //   while (index >= 0) {
-    //     var tweet = streams.home[index];
-    //     var $tweet = $('<div class="userTweet"></div>');
-    //     $tweet.text('@' + tweet.user + ': ' + tweet.message);
-    //     $tweet.appendTo($body);
-    //     index -= 1;
-    //   }
-
-    // });
     var oldIdx;
 
     $(document).ready(function () {
@@ -92,6 +77,21 @@
       $tweet.append($tweetDate, $userClick, $userMsg); // add specific username pic and append before tweetDate; show left of all elements
       $tweet.prependTo(entireTweet);
     };
+
+    // User timeline
+    var userTimeline = function (username) {
+      var $body = $('.userTimeline');
+      $body.text('');
+
+      streams.users[username].forEach(function (tweet) {
+        tweetFeed(tweet, $body);
+      });
+    };
+
+    // User Profile Pic
+    // Create logic if tweet.user is specific dog then specific dog will appear in tweet
+    // Download corgi, husky, shiba, frenchie pics
+    // Create assets folder for all pics
 
     // Date Format
     var dateFormat = function (date) {
