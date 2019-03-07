@@ -34,6 +34,33 @@
 
     });
 
+    // Date Format
+    var dateFormat = function (date) {
+      var month = { month: 'short' };
+      var monthWord = Intl.DateTimeFormat('en-US', month).format(date);
+      var dateNum = date.getDate();
+      var year = date.getFullYear();
+      return monthWord + ' ' + dateNum + ', ' + year;
+    }
+
+    // Time Format
+    var timeFormat = function (time) {
+      var hour = time.getHours();
+      var minute = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes();
+      if (hour === 0) {
+        return 12 + ':' + minute + ' am';
+      }
+      if (hour === 12) {
+        return 12 + ':' + minute + ' pm';
+      }
+      if (hour < 12) {
+        return hour + ':' + minute + ' am';
+      }
+      if (hour > 12) {
+        return (hour - 12) + ':' + minute + ' pm';
+      }
+    };
+
   </script>
 </body>
 
