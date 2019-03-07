@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="jquery.js"></script>
-    <script src="data_generator.js"></script>
-  </head>
-  <body>
-    <script>
 
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+<head>
+  <script src="jquery.js"></script>
+  <script src="data_generator.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
+<body>
+  <div class="tweet-box-container">
+    <div class="tweet-header">
+      <img class="main-user" src="assets/dogCoding.jpg" alt="dog on computer">
+      <div id="main-user">@doggoCodes</div>
+    </div>
+    <div class="tweets-container"></div>
+    <div class="userTimeline"></div>
+  </div>
 
-      });
+  <script>
 
-    </script>
-  </body>
+    $(document).ready(function () {
+      var $body = $('.tweets-container');
+      $body.html('');
+
+      var index = streams.home.length - 1;
+      while (index >= 0) {
+        var tweet = streams.home[index];
+        var $tweet = $('<div class="userTweet"></div>');
+        $tweet.text('@' + tweet.user + ': ' + tweet.message);
+        $tweet.appendTo($body);
+        index -= 1;
+      }
+
+    });
+
+  </script>
+</body>
+
 </html>
