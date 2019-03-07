@@ -19,20 +19,79 @@
 
   <script>
 
-    $(document).ready(function () {
-      var $body = $('.tweets-container');
-      $body.html('');
+    // $(document).ready(function () {
+    //   var $body = $('.tweets-container');
+    //   $body.html('');
 
-      var index = streams.home.length - 1;
-      while (index >= 0) {
-        var tweet = streams.home[index];
-        var $tweet = $('<div class="userTweet"></div>');
-        $tweet.text('@' + tweet.user + ': ' + tweet.message);
-        $tweet.appendTo($body);
-        index -= 1;
+    //   var index = streams.home.length - 1;
+    //   while (index >= 0) {
+    //     var tweet = streams.home[index];
+    //     var $tweet = $('<div class="userTweet"></div>');
+    //     $tweet.text('@' + tweet.user + ': ' + tweet.message);
+    //     $tweet.appendTo($body);
+    //     index -= 1;
+    //   }
+
+    // });
+    var oldIdx;
+
+    $(document).ready(function () {
+      var $tweetbody = $('.tweets-container');
+      $tweetbody.html('');
+
+      var idx = 0;
+      oldIdx = idx;
+
+      while (idx <= 10) {
+        var tweet = streams.home[idx];
+        tweetFeed(tweet, $tweetbody);
+        idx++;
       }
 
+      $('.userClick').click(function () {
+        userTimeLine($(this).text());
+      });
     });
+
+    // New Tweet Generator
+    var newTweets = function () {
+      var $body = $('.tweets-container');
+      var newIdx = streams.home.length - 1;
+
+      while (newIdx > oldIdx) {
+        var tweet = streams.home[oldIdx];
+        tweetFeed(tweet, $body);
+        oldIdx++;
+      }
+
+      oldIdx = streams.home.length - 1;
+      setTimeout(newTweets, 6000);
+    };
+
+    newTweets();
+
+    // Append Tweets to Feed
+    var tweetFeed = function (tweet, entireTweet) {
+      var $tweet = $('<div class="userTweet"></div>');
+
+      var $tweetDate = $('<div class="tweetDate"></div>');
+      $tweetDate.text(dateFormat(tweet.created_at) + ' - ' + timeFormat(tweet.created_at));
+
+      var $userClick = $('<div class="userClick"></div>');
+      $userClick.text('@' + tweet.user + ': ');
+
+      // Allow the user to click on a username to see that user's timeline. (create a pop-up modal)
+      $userClick.click(function () {
+        // userTimeline($(this).text());
+        alert('successful click!');
+      });
+
+      var $userMsg = $('<div class="msg"></div>');
+      $userMsg.text(tweet.message);
+
+      $tweet.append($tweetDate, $userClick, $userMsg); // add specific username pic and append before tweetDate; show left of all elements
+      $tweet.prependTo(entireTweet);
+    };
 
     // Date Format
     var dateFormat = function (date) {
