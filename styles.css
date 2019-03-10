@@ -18,6 +18,7 @@ body {
   height: auto;
   background-color: white;
   margin: 20px 0;
+  overflow: hidden;
 }
 
 .main-user {
@@ -76,6 +77,7 @@ body {
   position: fixed;
   top: 0;
   bottom: 0;
+  overflow: overlay;
 }
 
 .popup-content {
