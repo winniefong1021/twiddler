@@ -70,9 +70,12 @@ body {
 
 .userTimeline {
   display: flex;
-  position: absolute;
   width: inherit;
   height: auto;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
 }
 
 .popup-content {
@@ -85,4 +88,10 @@ body {
   margin-left: 23px;
   padding-left: 20px;
   box-shadow: 3px 3px 2px #ccc;
+}
+
+.close {
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
 }

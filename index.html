@@ -15,9 +15,7 @@
     </div>
     <div class="tweets-container"></div>
     <div class="userTimeline">
-      <div class="popup-content">
-        <button class="close">Close</button>
-      </div>
+      <div class="popup-content"></div>
     </div>
   </div>
 
@@ -25,10 +23,6 @@
     var oldIdx;
 
     $(document).ready(function () {
-      //hide hider and popup_box
-      $('.userTimeline').hide();
-      $('.popup-content').hide();
-
       var $tweetbody = $('.tweets-container');
       $tweetbody.html('');
 
@@ -41,35 +35,23 @@
         idx++;
       }
 
+      $('.userTimeline').hide();
+      $('.popup-content').hide();
+
       $('.userClick').click(function () {
         var username = ($(this).text()).slice(1, -2);
         userTimeline(username);
-        $('.userTimeline').fadeIn('slow');
-        $('.popup-content').fadeIn('slow');
 
+        $('.userTimeline').fadeIn('fast');
+        $('.popup-content').fadeIn('fast');
 
-        //       <!-- <div id="hider"></div>
-        // <div id="popup_box">
-        //   Message<br />
-        //   <a id="buttonClose">Close</a>
-        // </div>
-        // <div id="content">
-        //   Page's main content.<br />
-        //   <a id="showpopup">ClickMe</a>
-        // </div> -->
+        var $close = $('<input class="close" type="button" value="Close" />');
+        $close.prependTo($('.popup-content'));
 
-        //on click show the hider div and the message
-        //  $("#showpopup").click(function () {
-        //     $("#hider").fadeIn("slow");
-        //     $('#popup_box').fadeIn("slow");
-        // });
-        // //on click hide the message and the
-        // $("#buttonClose").click(function () {
-
-        //     $("#hider").fadeOut("slow");
-        //     $('#popup_box').fadeOut("slow");
-        // });
-
+        $('.close').click(function () {
+          $('.userTimeline').fadeOut('fast');
+          $('.popup-content').fadeOut('fast');
+        });
       });
     });
 
@@ -99,6 +81,22 @@
 
       var $userClick = $('<div class="userClick"></div>');
       $userClick.text('@' + tweet.user + ': ');
+
+      $userClick.click(function () {
+        var username = ($(this).text()).slice(1, -2);
+        userTimeline(username);
+
+        $('.userTimeline').fadeIn('fast');
+        $('.popup-content').fadeIn('fast');
+
+        var $close = $('<input class="close" type="button" value="Close" />');
+        $close.prependTo($('.popup-content'));
+
+        $('.close').click(function () {
+          $('.userTimeline').fadeOut('fast');
+          $('.popup-content').fadeOut('fast');
+        });
+      });
 
       var $userMsg = $('<div class="msg"></div>');
       $userMsg.text(tweet.message);
