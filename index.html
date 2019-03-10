@@ -14,13 +14,21 @@
       <div id="main-user">@doggoCodes</div>
     </div>
     <div class="tweets-container"></div>
-    <div class="userTimeline"></div>
+    <div class="userTimeline">
+      <div class="popup-content">
+        <button class="close">Close</button>
+      </div>
+    </div>
   </div>
 
   <script>
     var oldIdx;
 
     $(document).ready(function () {
+      //hide hider and popup_box
+      $('.userTimeline').hide();
+      $('.popup-content').hide();
+
       var $tweetbody = $('.tweets-container');
       $tweetbody.html('');
 
@@ -34,7 +42,34 @@
       }
 
       $('.userClick').click(function () {
-        userTimeLine($(this).text());
+        var username = ($(this).text()).slice(1, -2);
+        userTimeline(username);
+        $('.userTimeline').fadeIn('slow');
+        $('.popup-content').fadeIn('slow');
+
+
+        //       <!-- <div id="hider"></div>
+        // <div id="popup_box">
+        //   Message<br />
+        //   <a id="buttonClose">Close</a>
+        // </div>
+        // <div id="content">
+        //   Page's main content.<br />
+        //   <a id="showpopup">ClickMe</a>
+        // </div> -->
+
+        //on click show the hider div and the message
+        //  $("#showpopup").click(function () {
+        //     $("#hider").fadeIn("slow");
+        //     $('#popup_box').fadeIn("slow");
+        // });
+        // //on click hide the message and the
+        // $("#buttonClose").click(function () {
+
+        //     $("#hider").fadeOut("slow");
+        //     $('#popup_box').fadeOut("slow");
+        // });
+
       });
     });
 
@@ -65,33 +100,23 @@
       var $userClick = $('<div class="userClick"></div>');
       $userClick.text('@' + tweet.user + ': ');
 
-      // Allow the user to click on a username to see that user's timeline. (create a pop-up modal)
-      $userClick.click(function () {
-        // userTimeline($(this).text());
-        alert('successful click!');
-      });
-
       var $userMsg = $('<div class="msg"></div>');
       $userMsg.text(tweet.message);
 
-      $tweet.append($tweetDate, $userClick, $userMsg); // add specific username pic and append before tweetDate; show left of all elements
+      $tweet.append($tweetDate, $userClick, $userMsg);
       $tweet.prependTo(entireTweet);
     };
 
     // User timeline
     var userTimeline = function (username) {
-      var $body = $('.userTimeline');
+      var $body = $('.popup-content');
       $body.text('');
 
-      streams.users[username].forEach(function (tweet) {
-        tweetFeed(tweet, $body);
-      });
+      var userTweets = streams.users[username];
+      for (var i = 0; i < userTweets.length; i++) {
+        tweetFeed(userTweets[i], $body);
+      }
     };
-
-    // User Profile Pic
-    // Create logic if tweet.user is specific dog then specific dog will appear in tweet
-    // Download corgi, husky, shiba, frenchie pics
-    // Create assets folder for all pics
 
     // Date Format
     var dateFormat = function (date) {
